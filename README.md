@@ -1,4 +1,4 @@
-# etf-steuernotizbuch
+# ETF-Steuernotizbuch
 Kleine Software mit GUI zum Verwalten und Simulieren der Steuerzahlungen auf Gewinne und Vorabpauschalen von Fonds und ETFs unter deutschem Steuerrecht. Besonders geeignet für Auslandsdepots und zur Simulation der anfallenden Steuern bei einem beabsichtigten Verkauf von Anteilen. 
 
 ## Kurzanleitung
@@ -31,14 +31,14 @@ Im Ergebnisfenster werden einige berechnete Werte dargstellt:
 
 Mit dem Button `Jahressteuerbericht erstellen` können Auswertungen für einzelne Kalenderjahre generiert werden. Das ist das Kernfeature dieses Tools da so Werte für eine mögliche Steuererklärung eines Kalenderjahres erhalten werden können. 
 
-**Es ist jedoch eine ausführliche Prüfung der Ergebnisse erforderlich, dieses Tool kann keine Steuerbeartung durchführen. Es ist ebenfalls möglich, dass Fehler in der Berechnung vorhanden sind, ebenso können persönliche Rahmenbedingungen zu einer abweichenden Steuerlast führen**
+**Es ist jedoch eine ausführliche Prüfung der Ergebnisse erforderlich, dieses Tool kann keine Steuerbeartung durchführen. Es ist ebenfalls möglich, dass Fehler in der Berechnung vorhanden sind, ebenso können persönliche Rahmenbedingungen zu einer abweichenden Steuerlast führen. Eine individuelle Steuerberatung erfolgt nicht, der Entwickler des Tools ist nicht in steuerberatenden Berufen tätig. Jegliche Ergebnisse sind als experimentell zu betrachten**
 
 Bevor der Button genutzt wird, ist es unbedingt erforderlich alle Transaktionen und Vorabpauschalen sorgfältig einzutragen. Kleine Fehler können große Auswirkungen haben. Es ist zu beachten, dass auch im Jahr des Verkaufs am 1.1. eine Vorabpauschale anfällt, diese sollte vorab berechnet werden, zB mit einer Steuersoftware. 
 
 Wenn alles eingetragen ist, kann ein Steuerbericht erstellt werden. Hierzu ist das Jahr einzutragen, für das man die Steuererklärung erstellen will. 
 
 Es öffnet sich ein Ergebnisfenster mit den folgenden Daten: 
-- Im oberen Bereich ist ein scrollbarer Bereich mit den einzelnen verkauften Chargen (ein Teil der vorhandenen Chargen) inklusive Gewinn pro Anteil und der ganzen Charge.
-
+- Im oberen Bereich ist ein scrollbarer Bereich mit den einzelnen verkauften Chargen (ein Teil der vorhandenen Chargen) inklusive Gewinn pro Anteil und der ganzen Charge. Die bereits bezahlte Steuer auf Vorabpauschalen vor dem Verkauf sind hier berücksichtigt und werden als Summe und pro Anteil angegeben. In einer möglichen Steuererklärung für das Jahr sind die Chargen einzeln einzutragen. In WISO-Steuer heißt die Tabelle (Anlage KAP-INV, Bereich "Investmentfonds, die nicht dem inländischen Steuerabzug unterlegen haben") "Verkauf von Investmentanteilen"
+- Unten steht noch eine (informatorische) Zusammenfassung der steuerlichen Beträge bezogen auf das Jahr inkl. Gesamtgewinn des Jahres vor und nach Teilfreistellung sowie eine Berechnung der voraussichtlichen Kapitalertragssteuer. 
 
 
