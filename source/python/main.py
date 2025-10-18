@@ -9,7 +9,7 @@ from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
 from tkcalendar import Calendar, DateEntry
 import time
- 
+import platform
 import numpy as np
 
 aktuellePositionenInvalide = False
@@ -231,11 +231,31 @@ def gibVorabpauschaleImJahr(jahr):
                 return vorabpauschale.hoehe
     return 0
 
+
+def gibAnzahlVorjahresmonateEinerVorabpauschale(vorabpauschale): #berechnet die Anzahl der  Vorjahresmonate die für die Vorabpauschale zählen. Die Anteile, die im Vorjahr erst gekauft werden zählen nur die investierten Monate inkl Kaufmonat, sonst 12
+    positionen = berechnePositionenZuDatum(vorabpauschale.datumFaelligkeit)
+    monate=0
+    for position in positionen:
+        if position.kaufdatumWert.tm_year < vorabpauschale.datumFaelligkeit.tm_year - 1: #nicht im Vorjahr gekauft?
+            monate += 12 # ganzes Vorjahr gehalten
+        else: #im Vorjahr gekauft
+            monate += 13 - position.kaufdatumWert.tm_mon #Anzahl angebrochener Monate gehalten
+    return monate
+
+def gibSpezielleVorabpauschaleProAnteilEinerPosition(vorabpauschale, position):
+    vorabpauschaleHoeheProVorjahresmonate = vorabpauschale.hoehe/gibAnzahlVorjahresmonateEinerVorabpauschale(vorabpauschale)
+    vorabpauschaleHoeheProVorjahresmonateProAnteil = vorabpauschaleHoeheProVorjahresmonate / gibAnzahlAnteileZuDatum(vorabpauschale.datumFaelligkeit)
+
+    if position.kaufdatumWert.tm_year < vorabpauschale.datumFaelligkeit.tm_year - 1: #nicht im Vorjahr gekauft?
+        return vorabpauschaleHoeheProVorjahresmonateProAnteil * 12 * len(berechnePositionenZuDatum(vorabpauschale.datumFaelligkeit)) # Wert pro Vorjahresmonate * 1 Jahr * Anzahl der Positionen
+    else: #im Vorjahr gekauft
+        return vorabpauschaleHoeheProVorjahresmonateProAnteil * (13 - position.kaufdatumWert.tm_mon) * len(berechnePositionenZuDatum(vorabpauschale.datumFaelligkeit)) # Wert pro Vorjahresmonate * Monate gehalte * Anzahl der Positionen
+
 def gibVorabpauschalenBisHeuteProAnteil(position):
         summe = 0
         for vorabpauschale in vorabpauschalen:
             if position.kaufdatumWert < vorabpauschale.datumFaelligkeit:
-                summe += vorabpauschale.hoehe/gibAnzahlAnteileZuDatum(vorabpauschale.datumFaelligkeit)
+                summe +=  gibSpezielleVorabpauschaleProAnteilEinerPosition(vorabpauschale, position)
         return summe
 
 def gibVorabpauschalenBisDatumProAnteil(position, datum):
@@ -243,7 +263,7 @@ def gibVorabpauschalenBisDatumProAnteil(position, datum):
         for vorabpauschale in vorabpauschalen:
             if vorabpauschale.datumFaelligkeit < datum:
                 if position.kaufdatumWert < vorabpauschale.datumFaelligkeit:
-                    summe += vorabpauschale.hoehe/gibAnzahlAnteileZuDatum(vorabpauschale.datumFaelligkeit)
+                    summe += gibSpezielleVorabpauschaleProAnteilEinerPosition(vorabpauschale, position)
         return summe
 
 class Vorabpauschale:
@@ -316,7 +336,8 @@ class NeuFenster:
     
 
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
         
     def bestaetigung(self):
@@ -339,7 +360,8 @@ class NeuFenster:
         
             update()
             buttonsAktivieren()
-            root.attributes('-disabled', 0)
+            if platform.system() == 'Windows':
+                root.attributes('-disabled', 0)
             self.fenster.destroy()
         except:
             tk.messagebox.showwarning(title="Fehler", message="Fehler in den Eingabefeldern, bitte erneut versuchen")
@@ -347,7 +369,8 @@ class NeuFenster:
 
 
     def __init__(self):
-        root.attributes('-disabled', 1)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
         self.fenster = tk.Toplevel(root)
     
         # sets the title of the
@@ -393,7 +416,8 @@ class KaufFenster:
 
 
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
         
     def bestaetigung(self):
@@ -409,14 +433,16 @@ class KaufFenster:
             if not eingetragen:
                 transaktionen.append(Transaktion(int(self.anzahlEingabefeld.get()), float(self.preisEingabefeld.get().replace(',','.')), datum, float(self.kostenEingabefeld.get().replace(',','.'))/int(self.anzahlEingabefeld.get()), True))
             update()
-            root.attributes('-disabled', 0)
+            if platform.system() == 'Windows':
+                root.attributes('-disabled', 0)
             self.fenster.destroy()
         except:
             tk.messagebox.showwarning(title="Fehler", message="Fehler in den Eingabefeldern, bitte erneut versuchen")
             self.fenster.lift()
 
     def __init__(self):
-        root.attributes('-disabled', 1)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
         self.fenster = tk.Toplevel(root)
     
         # sets the title of the
@@ -463,7 +489,8 @@ class VerkaufFenster:
 
 
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
         
     def bestaetigung(self):
@@ -478,7 +505,8 @@ class VerkaufFenster:
                     break
             if not eingetragen:
                 transaktionen.append(Transaktion(int(self.anzahlEingabefeld.get()), float(self.preisEingabefeld.get().replace(',','.')), datum, float(self.kostenEingabefeld.get().replace(',','.'))/int(self.anzahlEingabefeld.get()), False))
-            root.attributes('-disabled', 0)
+            if platform.system() == 'Windows':
+                root.attributes('-disabled', 0)
             self.fenster.destroy()
             update()
         except:
@@ -487,7 +515,8 @@ class VerkaufFenster:
 
 
     def __init__(self):
-        root.attributes('-disabled', 1)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
         self.fenster = tk.Toplevel(root)
     
         # sets the title of the
@@ -526,7 +555,8 @@ class VerkaufFenster:
 class VerkaufSimulationErgebnisFenster:
     fenster = 0
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
     
     def __init__(self, anzahl, preis):
@@ -584,7 +614,8 @@ class VerkaufSimulationFenster:
 
 
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
         
     def bestaetigung(self):
@@ -597,7 +628,8 @@ class VerkaufSimulationFenster:
             self.fenster.lift()
     
     def __init__(self):
-        root.attributes('-disabled', 1)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
         self.fenster = tk.Toplevel(root)
     
         # sets the title of the
@@ -627,7 +659,8 @@ class SteuerberichtErstellenFenster:
     jahrEingabefeld = 0
 
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
         
     def bestaetigung(self):
@@ -641,7 +674,8 @@ class SteuerberichtErstellenFenster:
             self.fenster.lift()
     
     def __init__(self):
-        root.attributes('-disabled', 1)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
         self.fenster = tk.Toplevel(root)
     
         # sets the title of the
@@ -662,7 +696,8 @@ class SteuerberichtErstellenFenster:
 class SteuerberichtErgebnisFenster:
     fenster = 0
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
 
     def __init__(self, jahr):
@@ -723,7 +758,8 @@ class VorabpauschaleEintragenFenster:
     jahrEingabefeld = 0
     hoeheEingabefeld = 0
     def onClosingKaufFenster(self):
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
         
     def bestaetigung(self):
@@ -749,11 +785,13 @@ class VorabpauschaleEintragenFenster:
         if not eingetragen:
             vorabpauschalen.append(Vorabpauschale(self.hoeheEingabefeld.get(), jahr))
         update()
-        root.attributes('-disabled', 0)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
         self.fenster.destroy()
 
     def __init__(self):
-        root.attributes('-disabled', 1)
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
         self.fenster = tk.Toplevel(root)
     
         # sets the title of the
