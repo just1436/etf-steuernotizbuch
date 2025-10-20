@@ -4,10 +4,9 @@ from tkinter import ttk
 from tkinter.messagebox import showerror
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg, NavigationToolbar2Tk)
+    FigureCanvasTkAgg)
 from matplotlib.backend_bases import key_press_handler
-from matplotlib.figure import Figure
-from tkcalendar import Calendar, DateEntry
+from tkcalendar import DateEntry
 import time
 import platform
 import numpy as np
