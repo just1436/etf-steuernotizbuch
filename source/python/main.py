@@ -2,10 +2,11 @@ import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import ttk
 from tkinter.messagebox import showerror
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import (
-    FigureCanvasTkAgg)
-from matplotlib.backend_bases import key_press_handler
+if __name__ == '__main__': #Start des Programms
+    import matplotlib.pyplot as plt
+    from matplotlib.backends.backend_tkagg import (
+        FigureCanvasTkAgg)
+    from matplotlib.backend_bases import key_press_handler
 from tkcalendar import DateEntry
 import time
 import platform
