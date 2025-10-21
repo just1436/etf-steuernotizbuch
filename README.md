@@ -20,20 +20,26 @@ TODO
 ### Per `pip` (Pypi) (für Windows und Linux mit Python möglich, MacOS nicht getestet)
 Das Projekt ist auf Pypi unter https://pypi.org/project/etf-steuernotizbuch/. Eine Installation kann per 
 
-`pip install etf-steuernotizbuch`
+```
+pip install etf-steuernotizbuch
+```
 
 erfolgen, hierzu sind grundlegende Kenntnisse mit Python bzw. pip erforderlich (muss beides installiert und eine "virtuelle Umgebung" erzeugt werden). Nach Installation kann das Programm einfach mit 
-
-`etf-steuernotizbuch` 
+```
+etf-steuernotizbuch
+```
 
 gestartet werden. Die Demo-CSV-Dateien müssen zusätzlich von Github (https://github.com/just1436/etf-steuernotizbuch) geladen werden. 
 
 ### Per Download von Github und Ausführung mit Python (für Windows und Linux mit Python möglich, MacOS nicht getestet)
-Das ganze Archiv kann geladen werden (https://github.com/just1436/etf-steuernotizbuch) und dann mit 
+Das ganze Archiv kann geladen werden (https://github.com/just1436/etf-steuernotizbuch) und dann die `main.py` per Python gestartet werden. Hierfür müssen die Bibliotheken `matplotlib`, `numpy` und `tkcalendar` installiert sein.
 
-`python3 etf_steuernotizbuch/main.py`
+```
+pip3 install matplotlib numpy tkcalendar
+python3 etf_steuernotizbuch/main.py
+```
 
-gestartet werden. Hierfür müssen die Bibliotheken `matplotlib`, `numpy` und `tkcalendar` installiert sein.
+
 Diese Methode ist geeignet für fortgeschrittene Benutzer da so der Quellcode leicht angepasst werden kann. Ich freue mich auch über Verbesserungsvorschläge im Code auf Github.
 
 
