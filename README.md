@@ -9,6 +9,24 @@ Zusätzlich bietet diese Software auch die Möglichkeit einer "Steuersimulation"
 
 **Ich freue mich über jede Rückmeldung oder Verbesserungsvorschläge zu diesem kleinen Projekt! Es ist aktuell noch in einer frühen Phase, dennoch war es für mich persönlich bereits nützlich und ich würde mich freuen wenn es auch anderen hilft.**
 
+## Installation
+
+### Per Paketmanager unter Linux
+TODO
+
+### Als ausführbare Datei unter Windows
+TODO
+
+### Per `pip` (Pypi) (für Windows und Linux mit Python möglich, MacOS nicht getestet)
+Das Projekt ist auf Pypi unter https://pypi.org/project/etf-steuernotizbuch/. Eine Installation kann per `pip install etf-steuernotizbuch` erfolgen, hierzu sind grundlegende Kenntnisse mit Python bzw. pip erforderlich (muss beides installiert und eine "virtuelle Umgebung" erzeugt werden). Nach Installation kann das Programm einfach mit `etf-steuernotizbuch` gestartet werden. Die Demo-CSV-Dateien müssen zusätzlich von Github (https://github.com/just1436/etf-steuernotizbuch) geladen werden. 
+
+### Per Download von Github und Ausführung mit Python (für Windows und Linux mit Python möglich, MacOS nicht getestet)
+Das ganze Archiv kann geladen werden (https://github.com/just1436/etf-steuernotizbuch) und dann mit `python3 etf_steuernotizbuch/main.py` gestartet werden. Hierfür müssen die Bibliotheken `matplotlib`, `numpy` und `tkcalendar` installiert sein.
+Diese Methode ist geeignet für fortgeschrittene Benutzer da so der Quellcode leicht angepasst werden kann. Ich freue mich auch über Verbesserungsvorschläge im Code auf Github.
+
+
+
+
 ## Kurzanleitung
 ### Anlegen eines Wertpapiers
 Nach dem Start kann über `Datei` - `Öffnen` die Demo-Datei `demo.csv` im Ordner `savefiles` geöffnet werden um die Software auszuprobieren. Alternativ kann mit `Datei` - `Neu` ein neues, leeres Dokument für ein Wertpapier erstellt werden.
