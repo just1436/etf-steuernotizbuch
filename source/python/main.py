@@ -127,7 +127,6 @@ def berechnePositionenZuDatum(datum):
     return aktuellePositionen
 
 def update():
-    global transaktionenInvalideLabel
     widthBar = 0.1
     bottom = 0
 
@@ -325,7 +324,6 @@ class Fonds:
         self.teilfreistellung = 0.3
 
 class NeuFenster:
-    global fonds
     fenster = 0
 
     nameEingabefeld = 0
