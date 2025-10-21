@@ -145,7 +145,7 @@ def update():
     canvas.draw()
     canvas.get_tk_widget().grid(row=0,column=2,columnspan=3, rowspan=10, **options)
     ax.set_title("Vorhandene Chargen")
-    plt.legend(title="Line", loc='upper left', reverse=True)
+    #plt.legend(title="Line", loc='upper left', reverse=True)
 
     transaktionenListBox.delete(0,"end")
     
@@ -811,99 +811,101 @@ class VorabpauschaleEintragenFenster:
         self.fenster.geometry("400x400")
         self.fenster.protocol("WM_DELETE_WINDOW", self.onClosingKaufFenster)     
 
-fonds = Fonds("Bitte Datei", "erstellen oder öffnen", "")
 
-vorabpauschalen = []
-transaktionen = []
+if __name__ == '__main__': #Start des Programms
+    fonds = Fonds("Bitte Datei", "erstellen oder öffnen", "")
 
-# root window
-root = tk.Tk()
-root.protocol('WM_DELETE_WINDOW', onClosingHauptFenster)
+    vorabpauschalen = []
+    transaktionen = []
 
-# frame
-frame = ttk.Frame(root) 
-root.title('Steuernotebook ETF-/Fondsanteile')
-root.geometry('1400x800')
-root.resizable(True, True)
+    # root window
+    root = tk.Tk()
+    root.protocol('WM_DELETE_WINDOW', onClosingHauptFenster)
 
-# field options
-options = {'padx': 5, 'pady': 2}
+    # frame
+    frame = ttk.Frame(root) 
+    root.title('Steuernotebook ETF-/Fondsanteile')
+    root.geometry('1400x800')
+    root.resizable(True, True)
 
-menubar = tk.Menu(root)
-filemenu = tk.Menu(menubar, tearoff=0)
-filemenu.add_command(label="Neu", command=neu)
-filemenu.add_command(label="Öffnen", command=laden)
-filemenu.add_command(label="Speichern", command=speichern)
-filemenu.add_separator()
-filemenu.add_command(label="Exit", command=root.quit)
-menubar.add_cascade(label="Datei", menu=filemenu)
+    # field options
+    options = {'padx': 5, 'pady': 2}
 
-helpmenu = tk.Menu(menubar, tearoff=0)
-#helpmenu.add_command(label="Hilfe Index", command=donothing)
-#helpmenu.add_command(label="Über...", command=donothing)
-menubar.add_cascade(label="Hilfe", menu=helpmenu)
+    menubar = tk.Menu(root)
+    filemenu = tk.Menu(menubar, tearoff=0)
+    filemenu.add_command(label="Neu", command=neu)
+    filemenu.add_command(label="Öffnen", command=laden)
+    filemenu.add_command(label="Speichern", command=speichern)
+    filemenu.add_separator()
+    filemenu.add_command(label="Exit", command=root.quit)
+    menubar.add_cascade(label="Datei", menu=filemenu)
 
-root.config(menu=menubar)
+    helpmenu = tk.Menu(menubar, tearoff=0)
+    #helpmenu.add_command(label="Hilfe Index", command=donothing)
+    #helpmenu.add_command(label="Über...", command=donothing)
+    menubar.add_cascade(label="Hilfe", menu=helpmenu)
 
-fondsnameLabel = ttk.Label(frame, text=fonds.name+'\n'+fonds.depot+'\n'+str(fonds.isin), font=('Helvetica', 18, 'bold'))
-fondsnameLabel.grid(row=0, column=0)
+    root.config(menu=menubar)
 
-transaktionenLabel = ttk.Label(frame, text='Transaktionen:')
-transaktionenLabel.grid(row=0, column=5, **options)
+    fondsnameLabel = ttk.Label(frame, text=fonds.name+'\n'+fonds.depot+'\n'+str(fonds.isin), font=('Helvetica', 18, 'bold'))
+    fondsnameLabel.grid(row=0, column=0)
 
-transaktionenListboxFrame = tk.Frame (frame)
-transaktionenListboxFrame.grid(row=1, column=5)
+    transaktionenLabel = ttk.Label(frame, text='Transaktionen:')
+    transaktionenLabel.grid(row=0, column=5, **options)
 
-transaktionenListBox=tk.Listbox(transaktionenListboxFrame, width=60, height=13)  
-transaktionenListBox.pack(side="left")
+    transaktionenListboxFrame = tk.Frame (frame)
+    transaktionenListboxFrame.grid(row=1, column=5)
 
-scrollbar = tk.Scrollbar(transaktionenListboxFrame,orient="vertical",command=transaktionenListBox.yview)
-scrollbar.pack(side ="right", fill = "y" )
-transaktionenListBox.configure(yscrollcommand=scrollbar.set)
+    transaktionenListBox=tk.Listbox(transaktionenListboxFrame, width=60, height=13)  
+    transaktionenListBox.pack(side="left")
 
-transaktionenInvalideLabel = ttk.Label(frame, text='')
-transaktionenInvalideLabel.grid(row=2, column=5, **options)
+    scrollbar = tk.Scrollbar(transaktionenListboxFrame,orient="vertical",command=transaktionenListBox.yview)
+    scrollbar.pack(side ="right", fill = "y" )
+    transaktionenListBox.configure(yscrollcommand=scrollbar.set)
 
-kaufenButton = tk.Button(frame, text="Kauf eintragen", command=kauf)
-kaufenButton.grid(row=3, column=5, **options)
+    transaktionenInvalideLabel = ttk.Label(frame, text='')
+    transaktionenInvalideLabel.grid(row=2, column=5, **options)
 
-verkaufenButton = tk.Button(frame, text="Verkauf eintragen", command=verkauf)
-verkaufenButton.grid(row=4, column=5, **options)
+    kaufenButton = tk.Button(frame, text="Kauf eintragen", command=kauf)
+    kaufenButton.grid(row=3, column=5, **options)
 
-verkaufSimulierenButton = tk.Button(frame, text="Verkauf simulieren", command=verkaufSimulieren)
-verkaufSimulierenButton.grid(row=5, column=5, **options)
+    verkaufenButton = tk.Button(frame, text="Verkauf eintragen", command=verkauf)
+    verkaufenButton.grid(row=4, column=5, **options)
 
-transaktionLoeschenButton = tk.Button(frame, text="Transaktion löschen", command=lambda: transaktionLoeschen(transaktionenListBox.curselection()))
-transaktionLoeschenButton.grid(row=6, column=5, **options)
+    verkaufSimulierenButton = tk.Button(frame, text="Verkauf simulieren", command=verkaufSimulieren)
+    verkaufSimulierenButton.grid(row=5, column=5, **options)
 
-steuerberichtButton = tk.Button(frame, text="Jahressteuerbericht erstellen", command=steuerberichtErstellen)
-steuerberichtButton.grid(row=1, column=0, **options)
+    transaktionLoeschenButton = tk.Button(frame, text="Transaktion löschen", command=lambda: transaktionLoeschen(transaktionenListBox.curselection()))
+    transaktionLoeschenButton.grid(row=6, column=5, **options)
 
-vorabpauschalenLabel = ttk.Label(frame, text='Gezahlte Vorabpauschalen:')
-vorabpauschalenLabel.grid(row=7, column=5)
+    steuerberichtButton = tk.Button(frame, text="Jahressteuerbericht erstellen", command=steuerberichtErstellen)
+    steuerberichtButton.grid(row=1, column=0, **options)
 
-vorabpauschalenListboxFrame = tk.Frame (frame)
-vorabpauschalenListboxFrame.grid(row=8, column=5)
+    vorabpauschalenLabel = ttk.Label(frame, text='Gezahlte Vorabpauschalen:')
+    vorabpauschalenLabel.grid(row=7, column=5)
 
-vorabpauschalenListBox=tk.Listbox(vorabpauschalenListboxFrame, width=60)  
-vorabpauschalenListBox.pack(side="left")
+    vorabpauschalenListboxFrame = tk.Frame (frame)
+    vorabpauschalenListboxFrame.grid(row=8, column=5)
 
-scrollbar = tk.Scrollbar(vorabpauschalenListboxFrame,orient="vertical",command=vorabpauschalenListBox.yview)
-scrollbar.pack(side ="right", fill = "y" )
-vorabpauschalenListBox.configure(yscrollcommand=scrollbar.set)
+    vorabpauschalenListBox=tk.Listbox(vorabpauschalenListboxFrame, width=60)  
+    vorabpauschalenListBox.pack(side="left")
 
-vorabpauschaleEintragenButton = tk.Button(frame, text="Vorabpauschale eintragen", command=vorabpauschaleEintragen)
-vorabpauschaleEintragenButton.grid(row=9, column=5, **options)
+    scrollbar = tk.Scrollbar(vorabpauschalenListboxFrame,orient="vertical",command=vorabpauschalenListBox.yview)
+    scrollbar.pack(side ="right", fill = "y" )
+    vorabpauschalenListBox.configure(yscrollcommand=scrollbar.set)
 
-vorabpauschaleLoeschenButton = tk.Button(frame, text="Vorabpauschale löschen", command=lambda: vorabpauschaleLoeschen(vorabpauschalenListBox.curselection()))
-vorabpauschaleLoeschenButton.grid(row=10, column=5, **options)
+    vorabpauschaleEintragenButton = tk.Button(frame, text="Vorabpauschale eintragen", command=vorabpauschaleEintragen)
+    vorabpauschaleEintragenButton.grid(row=9, column=5, **options)
 
-buttonsDeaktivieren()
+    vorabpauschaleLoeschenButton = tk.Button(frame, text="Vorabpauschale löschen", command=lambda: vorabpauschaleLoeschen(vorabpauschalenListBox.curselection()))
+    vorabpauschaleLoeschenButton.grid(row=10, column=5, **options)
 
-update()
+    buttonsDeaktivieren()
 
-# add padding to the frame and show it
-frame.grid(padx=10, pady=10)
+    update()
 
-# start the app
-root.mainloop()
+    # add padding to the frame and show it
+    frame.grid(padx=10, pady=10)
+
+    # start the app
+    root.mainloop()
