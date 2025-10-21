@@ -10,16 +10,15 @@ def read(fname):
 
 setup(
     name = "etf_steuernotizbuch",
-    version = "0.0.3",
+    version = "0.1.0",
     author = "just1436",
     author_email = "ju.sto@mailbox.org",
     long_description_content_type = "text/markdown",
-    description = ("Notizbuch für Ausland-ETF-Depots für Steuertracking"),
+    description = ("Kleine Software mit GUI zum Verwalten und Simulieren der Steuerzahlungen auf Gewinne und Vorabpauschalen von Fonds und ETFs unter deutschem Steuerrecht. Besonders geeignet für Auslandsdepots und zur Simulation der anfallenden Steuern bei einem beabsichtigten Verkauf von Anteilen."),
     packages = find_packages(),
-    license = "BSD",
-    keywords = "example documentation tutorial",
-    #url = "http://packages.python.org/an_example_pypi_project",
-    #packages=['matplotlib', 'numpy', 'tkcalendar'],
+    license = "MIT",
+    keywords = "etf steuer notizbuch vorabpauschale tax germany deutschland ",
+    url = "https://github.com/just1436/etf-steuernotizbuch",
     long_description=read('README.md'),
     entry_points={
         "console_scripts": [
