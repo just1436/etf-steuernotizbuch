@@ -1,6 +1,8 @@
 # ETF-Steuernotizbuch
 Kleine Software mit GUI zum Verwalten und Simulieren der Steuerzahlungen auf Gewinne und Vorabpauschalen von Fonds und ETFs unter deutschem Steuerrecht. Besonders geeignet für Auslandsdepots und zur Simulation der anfallenden Steuern bei einem beabsichtigten Verkauf von Anteilen. 
 
+<img width="1553" height="904" alt="Bildschirmfoto vom 2025-11-03 20-54-33" src="https://github.com/user-attachments/assets/2d8b1476-8fbc-44f6-a76b-3785c9b958c8" />
+
 ## Wozu dieses Tool gedacht ist - Motivation
 Im deutschen Steuerrecht ist seit 2018 die so genannte "Vorabpauschale" für (insb. idR thesaurierende) ETFs und Fonds vorgesehen. Dies führt zu einer komplizierten steuerlichen Situation bei einer Buy-and-Hold-Strategie dieser Produkte, da in der Regel jährlich Vorabpauschalen zu versteuern sind. Die Berechnung dieser ist bereits nicht trivial, jedoch ist es besonders unübersichtlich, wenn die Anteile wieder verkauft werden sollen. Hier ist nämlich für **jeden einzelnen Anteil** nachzuvollziehen, wie viel Vorabpauschale für diesen bereits abgeführt wurde, was sehr kompliziert wird, wenn über die Jahre mehrere Male der gleiche ETF gekauft wurde. Ebenso muss nachvollzogen werden wie viel Gewinn auf jeden einzelnen Anteil besteht, da nur dieser bei Verkauf versteuert werden muss. Hierbei ist insbesondere das FIFO (First-In-First-Out) anzuwenden, es sind also nicht alle Anteile gleich. So lange man einen Broker mit deutschem Sitz nutzt, ist das es dessen Aufgabe diese Informationen zu tracken und für die Steuer bei Verkauf aus- und gegenzurechnen. Hat man jedoch ein Depot im Ausland muss dies als Anleger selbst gemacht werden. 
 
@@ -62,6 +64,8 @@ Mit dem Button `Vorabpauschale eintragen` können für einzelne Kalenderjahre Vo
 
 ### Steuersimulation
 
+<img width="1364" height="436" alt="Bildschirmfoto vom 2025-11-03 20-57-10" src="https://github.com/user-attachments/assets/51cf8939-77d7-4288-979f-798e134cb5a6" />
+
 Sobald alle im Depot vorhandenen Transaktionen zu dem Wertpapier eingetragen sind, kann mit dem Button `Verkauf simulieren` eine Simulation eines Verkaufs und dessen steuerlichen Auswirkungen angestoßen werden. Für die Richtigkeit des Ergebnisses ist es essenziell, dass alle vorhergehenden Transaktionen ab dem ersten Kauf eingetragen sind. Ebenso sollten alle vorher angefallenen (also versteuerten) Vorabpauschalen inkl. des aktuellen Jahres (fehlen Vorabpauschalen wird der Wert des Gewinns  und damit die simulierte Steuer etwas zu hoch sein).
 
 Einzutragen sind die Anzahl der Anteile, die beabsichtigt werden zu verkaufen sowie eine Schätzung des Verkaufskurses (idR aktueller Kurs).
@@ -72,6 +76,8 @@ Im Ergebnisfenster werden einige berechnete Werte dargstellt:
 - Im unteren Bereich finden sich dann Gesamtgewinn vor und nach Teilfreistellung sowie die zu erwartende Kapitalertragsteuer (dieser Wert berücksichtigt natürlich nicht Rahmenfaktoren auf der Gesamtebene wie Sparerpauschbetrag oder Günstigerprüfung)
 
 ### Jahresssteuerbericht erstellen
+
+<img width="1511" height="609" alt="Bildschirmfoto vom 2025-11-03 20-56-21" src="https://github.com/user-attachments/assets/b979abba-c190-4481-9834-d691fcd6ebe9" />
 
 Mit dem Button `Jahressteuerbericht erstellen` können Auswertungen für einzelne Kalenderjahre generiert werden. Das ist das Kernfeature dieses Tools da so Werte für eine mögliche Steuererklärung eines Kalenderjahres erhalten werden können. 
 
