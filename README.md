@@ -1,7 +1,7 @@
 # ETF-Steuernotizbuch
-Kleine Software mit GUI zum Verwalten und Simulieren der Steuerzahlungen auf Gewinne und Vorabpauschalen von Fonds und ETFs unter deutschem Steuerrecht. Besonders geeignet für Auslandsdepots und zur Simulation der anfallenden Steuern bei einem beabsichtigten Verkauf von Anteilen. 
+Kleine Software mit GUI zum Verwalten und Simulieren der Steuerzahlungen auf Gewinne und Vorabpauschalen von Fonds und ETFs unter deutschem Steuerrecht. Besonders geeignet für Auslandsdepots und zur Simulation der anfallenden Steuern bei einem beabsichtigten Verkauf von Anteilen.
 
-<img width="1553" height="904" alt="Bildschirmfoto vom 2025-11-03 20-54-33" src="https://github.com/user-attachments/assets/2d8b1476-8fbc-44f6-a76b-3785c9b958c8" />
+<img width="1495" height="904" alt="Bildschirmfoto vom 2025-11-03 22-37-58" src="https://github.com/user-attachments/assets/943c62cc-8419-41c7-b3c8-6313e6739fb3" />
 
 ## Wozu dieses Tool gedacht ist - Motivation
 Im deutschen Steuerrecht ist seit 2018 die so genannte "Vorabpauschale" für (insb. idR thesaurierende) ETFs und Fonds vorgesehen. Dies führt zu einer komplizierten steuerlichen Situation bei einer Buy-and-Hold-Strategie dieser Produkte, da in der Regel jährlich Vorabpauschalen zu versteuern sind. Die Berechnung dieser ist bereits nicht trivial, jedoch ist es besonders unübersichtlich, wenn die Anteile wieder verkauft werden sollen. Hier ist nämlich für **jeden einzelnen Anteil** nachzuvollziehen, wie viel Vorabpauschale für diesen bereits abgeführt wurde, was sehr kompliziert wird, wenn über die Jahre mehrere Male der gleiche ETF gekauft wurde. Ebenso muss nachvollzogen werden wie viel Gewinn auf jeden einzelnen Anteil besteht, da nur dieser bei Verkauf versteuert werden muss. Hierbei ist insbesondere das FIFO (First-In-First-Out) anzuwenden, es sind also nicht alle Anteile gleich. So lange man einen Broker mit deutschem Sitz nutzt, ist das es dessen Aufgabe diese Informationen zu tracken und für die Steuer bei Verkauf aus- und gegenzurechnen. Hat man jedoch ein Depot im Ausland muss dies als Anleger selbst gemacht werden. 
@@ -11,13 +11,15 @@ Zusätzlich bietet diese Software auch die Möglichkeit einer "Steuersimulation"
 
 **Ich freue mich über jede Rückmeldung oder Verbesserungsvorschläge zu diesem kleinen Projekt! Es ist aktuell noch in einer frühen Phase, dennoch war es für mich persönlich bereits nützlich und ich würde mich freuen wenn es auch anderen hilft.**
 
+<img width="1553" height="904" alt="Bildschirmfoto vom 2025-11-03 20-54-33" src="https://github.com/user-attachments/assets/2d8b1476-8fbc-44f6-a76b-3785c9b958c8" />
+
 ## Installation
 
 ### Per Paketmanager unter Linux
 TODO
 
 ### Als ausführbare Datei unter Windows
-TODO
+Im Ordner `windows` `ETF Steuernotizbuch.exe` ausführen.
 
 ### Per `pip` (Pypi) (für Windows und Linux mit Python möglich, MacOS nicht getestet)
 Das Projekt ist auf Pypi unter https://pypi.org/project/etf-steuernotizbuch/. Eine Installation kann per 
