@@ -20,7 +20,7 @@ Zusätzlich bietet diese Software auch die Möglichkeit einer "Steuersimulation"
 TODO
 
 ### Als ausführbare Datei unter Windows
-Im Ordner `windows` `ETF Steuernotizbuch.exe` ausführen.
+Im Ordner `windows` ZIP-Datei entpacken und `ETF Steuernotizbuch.exe` ausführen.
 
 ### Per `pip` (Pypi) (für Windows und Linux mit Python möglich, MacOS nicht getestet)
 Das Projekt ist auf Pypi unter https://pypi.org/project/etf-steuernotizbuch/. Eine Installation kann per 
