@@ -1,7 +1,8 @@
 # ETF-Steuernotizbuch
 Kleine Software mit GUI zum Verwalten und Simulieren der Steuerzahlungen auf Gewinne und Vorabpauschalen von Fonds und ETFs unter deutschem Steuerrecht. Besonders geeignet für Auslandsdepots und zur Simulation der anfallenden Steuern bei einem beabsichtigten Verkauf von Anteilen.
 
-<img width="1495" height="904" alt="Bildschirmfoto vom 2025-11-03 22-37-58" src="https://github.com/user-attachments/assets/943c62cc-8419-41c7-b3c8-6313e6739fb3" />
+<img width="1496" height="902" alt="Bildschirmfoto vom 2025-12-07 22-33-28" src="https://github.com/user-attachments/assets/ffa57d8f-357c-49fb-9e4d-33444be3c132" />
+
 
 ## Wozu dieses Tool gedacht ist - Motivation
 Im deutschen Steuerrecht ist seit 2018 die so genannte "Vorabpauschale" für (insb. idR thesaurierende) ETFs und Fonds vorgesehen. Dies führt zu einer komplizierten steuerlichen Situation bei einer Buy-and-Hold-Strategie dieser Produkte, da in der Regel jährlich Vorabpauschalen zu versteuern sind. Die Berechnung dieser ist bereits nicht trivial, jedoch ist es besonders unübersichtlich, wenn die Anteile wieder verkauft werden sollen. Hier ist nämlich für **jeden einzelnen Anteil** nachzuvollziehen, wie viel Vorabpauschale für diesen bereits abgeführt wurde, was sehr kompliziert wird, wenn über die Jahre mehrere Male der gleiche ETF gekauft wurde. Ebenso muss nachvollzogen werden wie viel Gewinn auf jeden einzelnen Anteil besteht, da nur dieser bei Verkauf versteuert werden muss. Hierbei ist insbesondere das FIFO (First-In-First-Out) anzuwenden, es sind also nicht alle Anteile gleich. So lange man einen Broker mit deutschem Sitz nutzt, ist das es dessen Aufgabe diese Informationen zu tracken und für die Steuer bei Verkauf aus- und gegenzurechnen. Hat man jedoch ein Depot im Ausland muss dies als Anleger selbst gemacht werden. 
@@ -11,7 +12,7 @@ Zusätzlich bietet diese Software auch die Möglichkeit einer "Steuersimulation"
 
 **Ich freue mich über jede Rückmeldung oder Verbesserungsvorschläge zu diesem kleinen Projekt! Es ist aktuell noch in einer frühen Phase, dennoch war es für mich persönlich bereits nützlich und ich würde mich freuen wenn es auch anderen hilft.**
 
-<img width="1553" height="904" alt="Bildschirmfoto vom 2025-11-03 20-54-33" src="https://github.com/user-attachments/assets/2d8b1476-8fbc-44f6-a76b-3785c9b958c8" />
+<img width="1499" height="904" alt="Bildschirmfoto vom 2025-12-07 22-35-51" src="https://github.com/user-attachments/assets/f842ef84-0570-4b92-a715-7ff0f4db987f" />
 
 ## Installation
 
@@ -92,6 +93,10 @@ Wenn alles eingetragen ist, kann ein Steuerbericht erstellt werden. Hierzu ist d
 Es öffnet sich ein Ergebnisfenster mit den folgenden Daten: 
 - Im oberen Bereich ist ein scrollbarer Bereich mit den einzelnen verkauften Chargen (ein Teil der vorhandenen Chargen) inklusive Gewinn pro Anteil und der ganzen Charge. Die bereits bezahlte Steuer auf Vorabpauschalen vor dem Verkauf sind hier berücksichtigt und werden als Summe und pro Anteil angegeben. In einer möglichen Steuererklärung für das Jahr sind die Chargen einzeln einzutragen. In WISO-Steuer heißt die Tabelle (Anlage KAP-INV, Bereich "Investmentfonds, die nicht dem inländischen Steuerabzug unterlegen haben") "Verkauf von Investmentanteilen"
 - Unten steht noch eine (informatorische) Zusammenfassung der steuerlichen Beträge bezogen auf das Jahr inkl. Gesamtgewinn des Jahres vor und nach Teilfreistellung sowie eine Berechnung der voraussichtlichen Kapitalertragssteuer. 
+
+### Fonds-Split eintragen
+
+Mit `Bearbeiten` -  `Fonds-Split` kann ein Fonds-Split einmalig eingetragen werden. Dies ist erforderlich, wenn die Fondsgesellschaft beschließt die bestehenden Anteile zu splitten, das heißt aus einem Anteil werden z.B. 100. Im aufgehenden Dialog wird dann das Split-Datum eingetragen sowie in wie viele Anteile ein Anteil aufgeteilt wird. Im Hintergrund werden dann alle früheren Transaktionen entsprechend umgerechnet (betrifft Preise, Anzahl der Anteile und Transaktionskosten pro Anteil). Unzulässig ist es, wenn Transaktionen nach dem Split-Datum bei Eintragung vorhanden sind. **Ein Split kann nicht rückgängig gemacht werden, es wird empfohlen eine Sicherung der Speicherdatei vor Eintragung vorzunehmen** 
 
 ### Speichern/exportieren
 Mit `Datei` - `Speichern` können die Angaben, die bezüglich des Wertpapiers gemacht werden als CSV im Klartext gespeichert werden und mit einem Tabellenkalkulationsprogramm gelesen und manipuliert werden. Es handelt sich bei den gespeicherten Daten lediglich um folgende Informationen:
