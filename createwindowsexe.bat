@@ -1,0 +1,1 @@
+python -m PyInstaller --noconsole etf_steuernotizbuch\main.py

@@ -1,3 +1,4 @@
-./py_env
-./python/build
-./python/.venv
+.pypirc
+upload_wheel_pypi.sh
+.venv
+.vscode
