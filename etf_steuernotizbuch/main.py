@@ -11,6 +11,9 @@ from tkcalendar import DateEntry
 import time
 import platform
 import numpy as np
+import webbrowser
+
+version = "0.2.0"
 
 aktuellePositionenInvalide = False
 
@@ -64,6 +67,15 @@ def speichern():
 def str2bool(v):
     return v.lower() in ("true", "1")
 
+
+def ueber():
+    UeberFenster()
+
+def onlineHilfe():
+    webbrowser.open("https://github.com/just1436/etf-steuernotizbuch/")
+
+
+
 def laden():
     dateiname = fd.askopenfilename(title='Datei Öffnen', initialdir='*', filetypes=filetypes)
     if dateiname =="":
@@ -90,6 +102,10 @@ def neu():
     vorabpauschalen.clear()
     NeuFenster()
     
+
+def split():
+    SplitFenster()
+
 def onClosingHauptFenster():
     root.quit()
 
@@ -159,9 +175,9 @@ def update():
     vorabpauschalenListBox.delete(0,"end")
     for vorabpauschale in vorabpauschalen:
         if gibAnzahlAnteileZuDatum(vorabpauschale.datumFaelligkeit)<=0:
-            vorabpauschalenListBox.insert("end", str(vorabpauschale.jahr)+": "+str(vorabpauschale.hoehe)+"€ (pro Anteil: ERROR)")
+            vorabpauschalenListBox.insert("end", str(vorabpauschale.jahr)+": "+str(vorabpauschale.hoehe)+" FEHLER: Keine Anteile vorhanden")
             break
-        vorabpauschalenListBox.insert("end", str(vorabpauschale.jahr)+": "+str(vorabpauschale.hoehe)+"€ (pro Anteil: "+str(round(vorabpauschale.hoehe/gibAnzahlAnteileZuDatum(vorabpauschale.datumFaelligkeit),2))+"€)")
+        vorabpauschalenListBox.insert("end", str(vorabpauschale.jahr)+": "+str(vorabpauschale.hoehe)+"€")
 
 def kauf():
     KaufFenster()
@@ -400,6 +416,37 @@ class NeuFenster:
         bestaetigenButton = tk.Button(self.fenster, text="Fonds/ETF erstellen", command=self.bestaetigung)
         bestaetigenButton.pack(padx=10, pady=10)
 
+
+class UeberFenster:
+    fenster = 0
+    def onClosingUeberFenster(self):
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
+        self.fenster.destroy()
+        
+    
+
+
+    def __init__(self):
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
+        self.fenster = tk.Toplevel(root)
+    
+        # sets the title of the
+        # Toplevel widget
+        self.fenster.title("Über ETF-Steuernotizbuch")
+    
+        # sets the geometry of toplevel
+        self.fenster.geometry("300x300")
+        self.fenster.protocol("WM_DELETE_WINDOW", self.onClosingUeberFenster)
+
+        # A Label widget to show in toplevel
+        tk.Label(self.fenster, text = "ETF-Steuernotizbuch").pack()
+        tk.Label(self.fenster, text = "by just1436 (Github)").pack()
+        tk.Label(self.fenster, text = "Wertpapierforum: julci").pack()
+        tk.Label(self.fenster, text = "Version: "+version).pack()
+
+
 class KaufFenster:
     
     fenster = 0
@@ -548,6 +595,86 @@ class VerkaufFenster:
         self.kostenEingabefeld.pack(padx=10, pady=10)
 
         bestaetigenButton = tk.Button(self.fenster, text="Verkauf eintragen", command=self.bestaetigung)
+        bestaetigenButton.pack(padx=10, pady=10)
+
+
+class SplitFenster:
+    
+    fenster = 0
+    splitfaktor = 0
+    datum = ""
+
+    splitfaktorEingabefeld = 0
+    datumEingabefeld = 0
+
+
+    def onClosingSplitFenster(self):
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 0)
+        self.fenster.destroy()
+        
+    def bestaetigung(self):
+        try:
+            datum = str(self.datumEingabefeld.get_date())
+            datumWert = time.strptime(datum, "%Y-%m-%d")
+            splitfaktor = int(self.splitfaktorEingabefeld.get())
+            
+            if transaktionen[-1].datumWert > datumWert:
+                tk.messagebox.showwarning(title="Fehler", message="Es gibt Transaktionen NACH dem Split-Datum, dies ist nicht zulässig.")
+                self.fenster.lift()
+                return
+            
+            for transaktion in transaktionen:
+                transaktion.anzahl *= splitfaktor
+                transaktion.kurs /= splitfaktor
+                transaktion.transaktionskosten /= splitfaktor
+
+
+
+            #TODO
+            
+            
+            if platform.system() == 'Windows':
+                root.attributes('-disabled', 0)
+            self.fenster.destroy()
+            update()
+
+            
+        except:
+            tk.messagebox.showwarning(title="Fehler", message="Fehler in den Eingabefeldern, bitte erneut versuchen")
+            self.fenster.lift()
+
+
+    def __init__(self):
+        if platform.system() == 'Windows':
+            root.attributes('-disabled', 1)
+        self.fenster = tk.Toplevel(root)
+    
+        # sets the title of the
+        # Toplevel widget
+        self.fenster.title("Fonds-Split eintragen")
+    
+        # sets the geometry of toplevel
+        self.fenster.geometry("800x400")
+        self.fenster.protocol("WM_DELETE_WINDOW", self.onClosingSplitFenster)
+
+        # A Label widget to show in toplevel
+        tk.Label(self.fenster, text = "Neuen Fonds-Split eintragen").pack()
+        tk.Label(self.fenster, text = "ACHTUNG: Die Eintragung eines Splits kann nicht rückgängig gemacht werden.").pack()
+        tk.Label(self.fenster, text = "Durch den Split werden rückwirkend ALLE Transaktionen VOR dem Split entsprechend modifiziert.").pack()
+        tk.Label(self.fenster, text = "Im Zweifel wird empfohlen vor Durchführung die Speicherdatei zu duplizieren.").pack()
+        tk.Label(self.fenster, text = "Es dürfen KEINE Transkationen AB dem Split-Datum exisitieren. Solche Transaktionen erst nach dem Split eintragen.").pack()
+
+        tk.Label(self.fenster, text = "Split-Datum:").pack()
+        self.datumEingabefeld = DateEntry(self.fenster, width=12, background='darkblue',
+                        foreground='white', borderwidth=2, date_pattern="yyyy-mm-dd")
+        self.datumEingabefeld.pack(padx=10, pady=10)
+
+        tk.Label(self.fenster, text = "Split-Faktor (1:XXX):").pack()
+        self.splitfaktorEingabefeld = tk.Entry(self.fenster)
+        self.splitfaktorEingabefeld.pack(padx=10, pady=10)
+
+        bestaetigenButton = tk.Button(self.fenster, text="Fonds-Split unwiderruflich eintragen", command=self.bestaetigung)
         bestaetigenButton.pack(padx=10, pady=10)
 
 class VerkaufSimulationErgebnisFenster:
@@ -800,7 +927,7 @@ class VorabpauschaleEintragenFenster:
         self.jahrEingabefeld.pack(padx=10, pady=10)
         tk.Label(self.fenster, text = "[bitte Jahr eintragen, zu dessen Beginn die Vorabpauschale fällig war]").pack()
 
-        tk.Label(self.fenster, text = "Gezahlte Vorabpauschale:").pack()
+        tk.Label(self.fenster, text = "Angesetzte Vorabpauschale:").pack()
         self.hoeheEingabefeld = tk.Entry(self.fenster)
         self.hoeheEingabefeld.pack(padx=10, pady=10)
         tk.Label(self.fenster, text = "[idealerweise mit Steuersoftware ermittelt]").pack()
@@ -833,6 +960,8 @@ root.resizable(True, True)
 options = {'padx': 5, 'pady': 2}
 
 menubar = tk.Menu(root)
+
+#Datei-Menü
 filemenu = tk.Menu(menubar, tearoff=0)
 filemenu.add_command(label="Neu", command=neu)
 filemenu.add_command(label="Öffnen", command=laden)
@@ -841,9 +970,15 @@ filemenu.add_separator()
 filemenu.add_command(label="Exit", command=root.quit)
 menubar.add_cascade(label="Datei", menu=filemenu)
 
+#Bearbeiten-Menü
+bearbeitenmenu = tk.Menu(menubar, tearoff=0)
+bearbeitenmenu.add_command(label="Fonds-Split", command=split)
+menubar.add_cascade(label="Bearbeiten", menu=bearbeitenmenu)
+
+#Hilfe-Menü
 helpmenu = tk.Menu(menubar, tearoff=0)
-#helpmenu.add_command(label="Hilfe Index", command=donothing)
-#helpmenu.add_command(label="Über...", command=donothing)
+helpmenu.add_command(label="Online-Hilfe", command=onlineHilfe)
+helpmenu.add_command(label="Über...", command=ueber)
 menubar.add_cascade(label="Hilfe", menu=helpmenu)
 
 root.config(menu=menubar)
@@ -882,7 +1017,7 @@ transaktionLoeschenButton.grid(row=6, column=5, **options)
 steuerberichtButton = tk.Button(frame, text="Jahressteuerbericht erstellen", command=steuerberichtErstellen)
 steuerberichtButton.grid(row=1, column=0, **options)
 
-vorabpauschalenLabel = ttk.Label(frame, text='Gezahlte Vorabpauschalen:')
+vorabpauschalenLabel = ttk.Label(frame, text='Angesetzte Vorabpauschalen:')
 vorabpauschalenLabel.grid(row=7, column=5)
 
 vorabpauschalenListboxFrame = tk.Frame (frame)

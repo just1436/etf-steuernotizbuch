@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name = "etf_steuernotizbuch",
-    version = "0.1.0",
+    version = "0.2.0",
     author = "just1436",
     author_email = "ju.sto@mailbox.org",
     long_description_content_type = "text/markdown",
